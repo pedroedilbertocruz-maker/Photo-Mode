@@ -35,7 +35,7 @@ Baixe o `.dusk` em **Releases** (ou em **Actions → último build → mod-combi
 
 - **Botões L3 e R3:** o controle de GameCube não tem esses botões. A Aurora (a camada de PC do Dusklight) informa os cliques em `PADStatus::extButton`, e o mod lê esse campo a cada frame.
 - **Câmera:** é controlada por um operador do `CameraService`. Como o jogo pausa a câmera junto com o resto, o mod faz um hook em `fopCam_Execute` para mantê-la rodando, do mesmo jeito que a câmera de debug do Dusklight.
-- **Hora do dia:** a atualização normal do ambiente fica pausada junto com o jogo. Por isso, ao mudar a hora, o mod chama `CalcTevColor()` diretamente para recalcular as cores de luz, céu e névoa.
+- **Hora do dia:** a etapa de atualização do ambiente fica pausada junto com o jogo, então o mod grava a hora diretamente em `g_env_light.daytime`. As cores de luz, céu e névoa são misturadas na hora do desenho (`drawKankyo` → `setLight`), que continua rodando com o jogo congelado.
 
 ## Compilar localmente
 

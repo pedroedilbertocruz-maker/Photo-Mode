@@ -10,8 +10,9 @@
 //  - The camera is driven through a CameraService operator. Operators run inside dCamera_c::Run,
 //    which the game skips while paused, so fopCam_Execute is hooked to keep the camera running
 //    while everything else is frozen (the same approach as Dusklight's debug fly camera).
-//  - Changing the clock while frozen re-runs CalcTevColor so light, sky and fog colors follow
-//    (the normal per-frame environment update is paused along with the game).
+//  - Changing the clock while frozen just writes the save-file time and g_env_light.daytime:
+//    palette light, sky and fog colors are blended at draw time (drawKankyo -> setLight and
+//    settingTevStruct), which keeps running while the game is frozen.
 
 #include "global.h"
 
@@ -128,10 +129,9 @@ void lock_events(bool lock) {
 
 void apply_time(float degrees) {
     dComIfGs_setTime(degrees);
+    // The environment's update step (which normally copies the clock into daytime) is frozen
+    // with the game, so set it directly; draw-time color blending picks it up.
     g_env_light.daytime = degrees;
-    // The environment's per-frame update is frozen with the game; recompute the light, sky and
-    // fog colors for the new time directly.
-    g_env_light.CalcTevColor();
 }
 
 // --- Enter / exit -----------------------------------------------------------------------------
