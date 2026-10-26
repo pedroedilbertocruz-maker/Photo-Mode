@@ -1,0 +1,7 @@
+{
+  "id": "com.pedroedilbertocruz.photo_mode",
+  "name": "Photo Mode",
+  "version": "@PROJECT_VERSION@",
+  "author": "pedroedilbertocruz-maker",
+  "description": "Press L3 + R3 to freeze the game, hide the HUD and fly a free camera. Change the time of day with the D-pad to check lighting mods at any hour."
+}
